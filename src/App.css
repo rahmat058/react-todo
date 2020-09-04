@@ -70,3 +70,16 @@ body {
   text-decoration: line-through;
   color: red;
 }
+
+.empty-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  min-height: 60vh;
+}
+
+.empty-section h5 {
+  color: #172B4D;
+}

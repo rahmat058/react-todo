@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { AiFillDelete, AiOutlineCheckSquare } from "react-icons/ai";
+import {
+  AiFillDelete,
+  AiOutlineCheckSquare,
+  AiOutlineInbox,
+} from "react-icons/ai";
 import Tippy from "@tippyjs/react";
 
 import EditTask from "./components/EditTask";
@@ -54,7 +58,7 @@ function App() {
 
   useEffect(() => {
     const res = taskList.filter((task) => {
-      return task.name.toLowerCase().indexOf(searchTask) !== -1; // returns true or false
+      return task.name.toLowerCase().indexOf(searchTask.toLowerCase()) !== -1; // returns true or false
     });
 
     if (searchTask !== "") {
@@ -112,45 +116,58 @@ function App() {
           </form>
 
           <div className="task-list">
-            <ul className="list-group">
-              {taskList.map((task, index) => (
-                <li
-                  key={index}
-                  className="list-group-item d-flex justify-content-between"
-                >
-                  <span
-                    className={task && task.isCompleted ? "completed-task" : ""}
+            {taskList.length > 0 ? (
+              <ul className="list-group">
+                {taskList.map((task, index) => (
+                  <li
+                    key={index}
+                    className="list-group-item d-flex justify-content-between"
                   >
-                    {task && task.name}
-                  </span>{" "}
-                  <span className="d-flex">
-                    <EditTask
-                      task={task}
-                      updateTask={updateTask}
-                      index={index}
-                    />
-                    <Tippy content="Completed Task">
-                      <span
-                        className="cursor-pointer"
-                        onClick={() => completeTask(index)}
-                        style={{ marginRight: 10 }}
-                      >
-                        <AiOutlineCheckSquare size={20} color="green" />
-                      </span>
-                    </Tippy>
+                    <span
+                      className={
+                        task && task.isCompleted ? "completed-task" : ""
+                      }
+                    >
+                      {task && task.name}
+                    </span>{" "}
+                    <span className="d-flex">
+                      <EditTask
+                        task={task}
+                        updateTask={updateTask}
+                        index={index}
+                      />
+                      <Tippy content="Completed Task">
+                        <span
+                          className="cursor-pointer"
+                          onClick={() => completeTask(index)}
+                          style={{ marginRight: 10 }}
+                        >
+                          <AiOutlineCheckSquare size={20} color="green" />
+                        </span>
+                      </Tippy>
 
-                    <Tippy content="Delete Task">
-                      <span
-                        className="cursor-pointer"
-                        onClick={() => deleteTask(index)}
-                      >
-                        <AiFillDelete size={20} color="red" />
-                      </span>
-                    </Tippy>
+                      <Tippy content="Delete Task">
+                        <span
+                          className="cursor-pointer"
+                          onClick={() => deleteTask(index)}
+                        >
+                          <AiFillDelete size={20} color="red" />
+                        </span>
+                      </Tippy>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="empty-section">
+                <h5>No Task Available</h5>
+                <div>
+                  <span>
+                    <AiOutlineInbox size={100} color="#172B4D" />
                   </span>
-                </li>
-              ))}
-            </ul>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
