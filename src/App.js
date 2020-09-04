@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import { AiFillDelete, AiOutlineCheckSquare } from "react-icons/ai";
+import Tippy from "@tippyjs/react";
 
 import EditTask from "./components/EditTask";
 
@@ -37,7 +38,7 @@ function App() {
         return [...oldData, taskData];
       });
     } else {
-      alert("Please insert a task name...")
+      alert("Please insert a task name...");
     }
 
     setTaskName("");
@@ -117,7 +118,9 @@ function App() {
                   key={index}
                   className="list-group-item d-flex justify-content-between"
                 >
-                  <span className={task && task.isCompleted ? "completed-task" : ""}>
+                  <span
+                    className={task && task.isCompleted ? "completed-task" : ""}
+                  >
                     {task && task.name}
                   </span>{" "}
                   <span className="d-flex">
@@ -126,19 +129,24 @@ function App() {
                       updateTask={updateTask}
                       index={index}
                     />
-                    <span
-                      className="cursor-pointer"
-                      onClick={() => completeTask(index)}
-                      style={{ marginRight: 10 }}
-                    >
-                      <AiOutlineCheckSquare size={20} color="green" />
-                    </span>
-                    <span
-                      className="cursor-pointer"
-                      onClick={() => deleteTask(index)}
-                    >
-                      <AiFillDelete size={20} color="red" />
-                    </span>
+                    <Tippy content="Completed Task">
+                      <span
+                        className="cursor-pointer"
+                        onClick={() => completeTask(index)}
+                        style={{ marginRight: 10 }}
+                      >
+                        <AiOutlineCheckSquare size={20} color="green" />
+                      </span>
+                    </Tippy>
+
+                    <Tippy content="Delete Task">
+                      <span
+                        className="cursor-pointer"
+                        onClick={() => deleteTask(index)}
+                      >
+                        <AiFillDelete size={20} color="red" />
+                      </span>
+                    </Tippy>
                   </span>
                 </li>
               ))}
